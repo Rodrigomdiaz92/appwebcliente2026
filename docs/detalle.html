@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <title>Detalle del producto</title>
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+
+        <a class="navbar-brand" href="../index.html">MARCA</a>
+
+        <div class="d-flex align-items-center order-lg-3 ms-auto">
+          <button class="btn btn-primary"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasRight">
+            🛒
+          </button>
+        </div>
+
+        <button class="navbar-toggler ms-2" type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarContent">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse order-lg-2" id="navbarContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" href="../index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Productos</a>
+            </li>
+          </ul>
+
+          <form class="d-flex mt-3 mt-lg-0" role="search">
+            <input class="form-control me-2" type="search" placeholder="Buscar producto">
+            <button class="btn btn-outline-success" type="submit">Buscar</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Carrito</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+      </div>
+      <div class="offcanvas-body">
+        Tu carrito está vacío 🛒
+      </div>
+    </div>
+  </header>
+
+  <main class="container my-5">
+    <a href="../index.html" class="btn btn-link px-0 mb-4">← Volver al catálogo</a>
+
+    <div class="row g-4">
+
+      <div class="col-12 col-md-6">
+        <div class="card border-0 shadow-sm">
+          <img
+            src="https://placehold.co/600x500"
+            class="img-fluid rounded"
+            alt="Producto"
+          >
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <span class="badge text-bg-light mb-2">Categoría</span>
+
+        <h2 class="mb-3">Nombre del producto</h2>
+
+        <div class="mb-3">
+          <span class="text-warning fs-5">★★★★☆</span>
+          <span class="text-muted ms-2">(120 reseñas)</span>
+        </div>
+
+        <h3 class="text-success mb-3">$249.999</h3>
+
+        <p class="text-muted">
+          Aquí se mostrará la descripción del producto seleccionado, sus características y los datos más importantes para el cliente.
+        </p>
+
+        <ul class="list-group list-group-flush mb-4">
+          <li class="list-group-item">✔ Stock disponible</li>
+          <li class="list-group-item">✔ Envío gratis</li>
+          <li class="list-group-item">✔ Garantía 12 meses</li>
+        </ul>
+
+        <div class="d-grid gap-2 d-md-flex">
+          <button class="btn btn-primary btn-lg">Comprar ahora</button>
+          <button class="btn btn-outline-secondary btn-lg">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+
+    <section class="mt-5">
+      <h4 class="mb-4">Tiendas disponibles</h4>
+
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>Tienda</th>
+              <th>Ubicación</th>
+              <th>Precio</th>
+              <th>Stock</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Tech Store</td>
+              <td>Buenos Aires</td>
+              <td class="text-success">$249.999</td>
+              <td><span class="badge bg-success">Disponible</span></td>
+              <td><button class="btn btn-sm btn-primary">Ver tienda</button></td>
+            </tr>
+            <tr>
+              <td>Digital Market</td>
+              <td>Córdoba</td>
+              <td class="text-success">$255.000</td>
+              <td><span class="badge bg-warning text-dark">Poco stock</span></td>
+              <td><button class="btn btn-sm btn-primary">Ver tienda</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-top py-4 mt-5 bg-white">
+    <div class="container text-center text-md-start">
+      <div class="row">
+        <div class="col-md-6 mb-3 mb-md-0">
+          <h5 class="mb-2">appWebCliente2026</h5>
+          <p class="text-muted mb-0">Trabajo práctico grupal de ecommerce.</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <a href="../index.html" class="text-decoration-none me-3">Inicio</a>
+          <a href="#" class="text-decoration-none">Contacto</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../scripts/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>
