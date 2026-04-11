@@ -1,4 +1,4 @@
-const API_URL = 'https://fakestoreapi.com/products';
+const API_URL = 'https://web-api-products.runasp.net/api/Products';
 const productsContainer = document.getElementById('products-container');
 
 function renderProducts(products = []) {
@@ -41,7 +41,6 @@ fetch(API_URL)
   .then((data) => {
     renderProducts(data);
   })
-  .catch((error) => {
-    console.error('Error al obtener los productos:', error);
+  .catch(() => {
     renderProducts();
   });
