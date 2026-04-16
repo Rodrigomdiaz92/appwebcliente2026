@@ -40,6 +40,7 @@ fetch(API_URL)
   .then((response) => response.json())
   .then((data) => {
     renderProducts(data);
+    console.log('Productos cargados:', data);
   })
   .catch(() => {
     renderProducts();
