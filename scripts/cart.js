@@ -11,7 +11,6 @@ function getCarrito() { // buscamos si ya había prod guardados
     return [];
   }
 
-
   try {
     // se convierte el texto guardado a un array 
     const carrito = JSON.parse(storedCarrito);
