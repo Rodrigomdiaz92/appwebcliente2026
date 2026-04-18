@@ -26,12 +26,18 @@ function renderProducts(products = []) {
             <p class="card-text text-muted small">
               ${product.description.substring(0, 100)}...
             </p>
-            <div class="d-flex justify-content-between align-items-center mt-auto">
-              <span class="fw-bold fs-5">$${product.price}</span>
-              <a href="./docs/detalle.html?id=${product.id}" class="btn btn-outline-primary btn-sm">
-                Ver más
-              </a>
-            </div>
+             <div class="d-flex justify-content-between align-items-center mt-auto">
+               <span class="fw-bold fs-5">$${product.price}</span>
+               <div class="d-flex gap-2">
+                 <button class="btn btn-success btn-sm add-to-cart-btn" data-product-id="${product.id}">
+                   🛒
+                 </button>
+                 <a href="./docs/detalle.html?id=${product.id}" class="btn btn-outline-primary btn-sm">
+                   Ver más
+                 </a>
+               </div>
+             </div>
+
           </div>
         </div>
       </div>
@@ -67,6 +73,24 @@ if (busqForm) {
 if (busqInput) {
   busqInput.addEventListener('input', () => {
     filtrarProductos(busqInput.value);
+  });
+}
+
+if (productsContainer) {
+  productsContainer.addEventListener('click', (e) => {
+    if (e.target.classList.contains('add-to-cart-btn')) {
+      const productId = Number(e.target.dataset.productId);
+      const product = allProducts.find(p => p.id === productId);
+      if (product) {
+        window.cartUtils?.addProductToCart(product);
+        
+        const elementoOffCanvas = document.getElementById('offcanvasRight');
+        if (elementoOffCanvas && typeof bootstrap !== 'undefined') {
+          const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(elementoOffCanvas);
+          offcanvas.show();
+        }
+      }
+    }
   });
 }
 

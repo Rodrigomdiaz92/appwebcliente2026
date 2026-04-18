@@ -1,0 +1,16 @@
+.offcanvas-body {
+  padding: 1rem;
+}
+
+.cart-item-card {
+  transition: transform 0.2s ease;
+}
+
+.cart-item-card:hover {
+  transform: scale(1.02);
+}
+
+/* Ajuste para que los botones de cantidad sean compactos */
+.btn-sm {
+  font-size: 0.75rem;
+}

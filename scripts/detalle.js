@@ -49,16 +49,18 @@ function renderProduct(product) {
           <li class="list-group-item">✔ Garantía 12 meses</li>
         </ul>
 
-        <div class="d-grid gap-2 d-md-flex">
-          <button class="btn btn-primary btn-lg">Comprar ahora</button>
-          <button class="btn btn-outline-secondary btn-lg" id="add-to-cart-button">Agregar al carrito</button>
-        </div>
+          <div class="d-grid gap-2 d-md-flex">
+            <button class="btn btn-primary btn-lg" id="buy-now-button">Comprar ahora</button>
+            <button class="btn btn-outline-secondary btn-lg" id="add-to-cart-button">Agregar al carrito</button>
+          </div>
+
       </div>
     </div>
 
   `;
 
     const btnAgrACarrito = document.getElementById('add-to-cart-button');
+    const btnBuyNow = document.getElementById('buy-now-button');
 
     if (btnAgrACarrito) {
       btnAgrACarrito.addEventListener('click', () => {
@@ -70,6 +72,13 @@ function renderProduct(product) {
           const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(elementoOffCanvas);
           offcanvas.show();
         }
+      });
+    }
+
+    if (btnBuyNow) {
+      btnBuyNow.addEventListener('click', () => {
+        window.cartUtils?.addProductToCart(p);
+        window.cartUtils?.finalizarCompra();
       });
     }
   }else {
