@@ -1,5 +1,8 @@
 const API_URL = 'https://web-api-products.runasp.net/api/Products';
 const productsContainer = document.getElementById('products-container');
+const busqForm = document.getElementById('search-form');
+const busqInput = document.getElementById('search-input');
+let allProducts = [];
 
 function renderProducts(products = []) {
   if (!productsContainer) return;
@@ -36,10 +39,42 @@ function renderProducts(products = []) {
   }).join('');
 }
 
+function filtrarProductos(terminosBusq = '') {
+  const busqueda = terminosBusq.trim().toLowerCase();
+
+  if (!busqueda) {
+    renderProducts(allProducts);
+    return;
+  }
+
+  const prodFiltrados = allProducts.filter((product) => {
+    const coincidenciaTitulo = product.title.toLowerCase().includes(busqueda);
+    const coincidenciaDesc = product.description.toLowerCase().includes(busqueda);
+
+    return coincidenciaTitulo || coincidenciaDesc;
+  });
+
+  renderProducts(prodFiltrados);
+}
+
+if (busqForm) {
+  busqForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    filtrarProductos(busqInput ? busqInput.value : '');
+  });
+}
+
+if (busqInput) {
+  busqInput.addEventListener('input', () => {
+    filtrarProductos(busqInput.value);
+  });
+}
+
 fetch(API_URL)
   .then((response) => response.json())
   .then((data) => {
-    renderProducts(data);
+    allProducts = data;
+    renderProducts(allProducts);
     console.log('Productos cargados:', data);
   })
   .catch(() => {

@@ -30,13 +30,11 @@ function renderProduct(product) {
       </div>
 
       <div class="col-12 col-md-6">
-        <span class="badge text-bg-light mb-2">Categoría</span>
 
         <h2 class="mb-3">${p.title}</h2>
 
         <div class="mb-3">
           <span class="text-warning fs-5">★★★★☆</span>
-          <span class="text-muted ms-2">(${p.rates} reseñas)</span>
         </div>
 
         <h3 class="text-success mb-3">$USD ${p.price.toFixed(2)}</h3>
@@ -53,46 +51,27 @@ function renderProduct(product) {
 
         <div class="d-grid gap-2 d-md-flex">
           <button class="btn btn-primary btn-lg">Comprar ahora</button>
-          <button class="btn btn-outline-secondary btn-lg">Agregar al carrito</button>
+          <button class="btn btn-outline-secondary btn-lg" id="add-to-cart-button">Agregar al carrito</button>
         </div>
       </div>
     </div>
 
-    <section class="mt-5">
-      <h4 class="mb-4">Tiendas disponibles</h4>
+  `;
 
-      <div class="table-responsive">
-        <table class="table table-hover align-middle">
-          <thead class="table-light">
-            <tr>
-              <th>Tienda</th>
-              <th>Ubicación</th>
-              <th>Precio</th>
-              <th>Stock</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>BS Store</td>
-              <td>Buenos Aires</td>
-              <td class="text-success">$USD ${p.price.toFixed(2)}</td>
-              <td><span class="badge bg-success">Disponible</span></td>
-              <td><button class="btn btn-sm btn-primary">Ver tienda</button></td>
-            </tr>
-            <tr>
-              <td>Digital Market</td>
-              <td>Córdoba</td>
-              <td class="text-success">$USD ${p.price.toFixed(2)}</td>
-              <td><span class="badge bg-warning text-dark">Poco stock</span></td>
-              <td><button class="btn btn-sm btn-primary">Ver tienda</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>  
+    const btnAgrACarrito = document.getElementById('add-to-cart-button');
 
-   `;
+    if (btnAgrACarrito) {
+      btnAgrACarrito.addEventListener('click', () => {
+        window.cartUtils?.addProductToCart(p);
+
+        const elementoOffCanvas = document.getElementById('offcanvasRight');
+
+        if (elementoOffCanvas && typeof bootstrap !== 'undefined') {
+          const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(elementoOffCanvas);
+          offcanvas.show();
+        }
+      });
+    }
   }else {
     productContainer.innerHTML = `<p>Producto no encontrado.</p>`;
   }
