@@ -158,3 +158,16 @@
     max-width: 46vw !important;
   }
 }
+
+.category-scroll {
+  overflow-x: auto;
+  white-space: nowrap;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 5px;
+}
+
+/* Oculta scrollbar */
+.category-scroll::-webkit-scrollbar {
+  display: none;
+}

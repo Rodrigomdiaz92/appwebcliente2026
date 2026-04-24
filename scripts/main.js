@@ -1,8 +1,20 @@
 const API_URL = 'https://web-api-products.runasp.net/api/Products';
 const productsContainer = document.getElementById('products-container');
+const categoryContainer = document.getElementById('categorys-container');
 const busqForm = document.getElementById('search-form');
 const busqInput = document.getElementById('search-input');
 let allProducts = [];
+let allCategories = [];
+const API_CATEGORIES = "https://web-api-products.runasp.net/api/Categories";
+
+
+document.addEventListener("click", (e) => {
+  const card = e.target.closest(".product-card");
+  if (card && !e.target.closest(".add-to-cart-btn")) {
+    const id = card.dataset.id;
+    window.location.href = `./docs/detalle.html?id=${id}`;
+  }
+});
 
 function renderProducts(products = []) {
   if (!productsContainer) return;
@@ -18,7 +30,7 @@ function renderProducts(products = []) {
 
   productsContainer.innerHTML = products.map((product) => {
     return `
-      <div class="col-12 col-sm-6 col-lg-4">
+      <div class="col-12 col-sm-6 col-lg-4 product-card"" data-id="${product.id}">
         <div class="card h-100 shadow-sm">
           <img src="${product.image}" class="card-img-top" alt="${product.title}">
           <div class="card-body d-flex flex-column">
@@ -30,11 +42,9 @@ function renderProducts(products = []) {
                <span class="fw-bold fs-5">$${product.price}</span>
                <div class="d-flex gap-2">
                  <button class="btn btn-success btn-sm add-to-cart-btn" data-product-id="${product.id}">
-                   🛒
+                   Agregar al carrito
                  </button>
-                 <a href="./docs/detalle.html?id=${product.id}" class="btn btn-outline-primary btn-sm">
-                   Ver más
-                 </a>
+                 
                </div>
              </div>
 
@@ -44,6 +54,26 @@ function renderProducts(products = []) {
     `;
   }).join('');
 }
+
+function renderCategory(category = []) {
+  if (!categoryContainer) return;
+
+  if (!category.length) {
+    categoryContainer.innerHTML = `
+      <div class="col-12">
+        <p class="text-muted">No hay productos para mostrar.</p>
+      </div>
+    `;
+    return;
+  }
+
+  categoryContainer.innerHTML = products.map((category) => {
+    return `
+      <button class="btn btn-outline-primary active flex-shrink-0" id="${category.id}">${category.name}</button>
+    `;
+  }).join('');
+}
+
 
 function filtrarProductos(terminosBusq = '') {
   const busqueda = terminosBusq.trim().toLowerCase();
@@ -103,4 +133,15 @@ fetch(API_URL)
   })
   .catch(() => {
     renderProducts();
+  });
+
+fetch(API_CATEGORIES)
+  .then((response) => response.json())
+  .then((data) => {
+    allCategories = data;
+    console.log('categorias cargados:', data);
+    renderCategory(allCategories)
+  })
+  .catch(() => {
+    console.log('Error al cargar categorías');
   });
