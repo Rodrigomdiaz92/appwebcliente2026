@@ -87,6 +87,8 @@ function renderProduct(product) {
   
 }
 
+Skeleton.renderProductDetail(productContainer);
+
 fetch(API_URL)
   .then((response) => response.json())
   .then((data) => {
