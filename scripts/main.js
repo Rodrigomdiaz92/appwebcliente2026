@@ -5,8 +5,20 @@ const busqForm = document.getElementById('search-form');
 const busqInput = document.getElementById('search-input');
 let allProducts = [];
 let allCategories = [];
+let categoriaActivaId = null;
 const API_CATEGORIES = "https://web-api-products.runasp.net/api/Categories";
 
+const nombresCategoria = {
+  Electronics: 'Electrónica',
+  Clothing: 'Ropa',
+  Sports: 'Deportes',
+  'Home & Kitchen': 'Hogar',
+  'Home & furniture': 'Muebles'
+};
+
+function nombreCategoria(category) {
+  return nombresCategoria[category.name] || category.name;
+}
 
 document.addEventListener("click", (e) => {
   const card = e.target.closest(".product-card");
@@ -30,7 +42,7 @@ function renderProducts(products = []) {
 
   productsContainer.innerHTML = products.map((product) => {
     return `
-      <div class="col-12 col-sm-6 col-lg-4 product-card"" data-id="${product.id}">
+      <div class="col-12 col-sm-6 col-lg-4 product-card" data-id="${product.id}">
         <div class="card h-100 shadow-sm">
           <img src="${product.image}" class="card-img-top" alt="${product.title}">
           <div class="card-body d-flex flex-column">
@@ -55,42 +67,77 @@ function renderProducts(products = []) {
   }).join('');
 }
 
-function renderCategory(category = []) {
+function renderCategory(categories = []) {
   if (!categoryContainer) return;
 
-  if (!category.length) {
-    categoryContainer.innerHTML = `
-      <div class="col-12">
-        <p class="text-muted">No hay productos para mostrar.</p>
-      </div>
-    `;
-    return;
-  }
-
-  categoryContainer.innerHTML = products.map((category) => {
-    return `
-      <button class="btn btn-outline-primary active flex-shrink-0" id="${category.id}">${category.name}</button>
-    `;
-  }).join('');
-}
-
-
-function filtrarProductos(terminosBusq = '') {
-  const busqueda = terminosBusq.trim().toLowerCase();
-
-  if (!busqueda) {
-    renderProducts(allProducts);
-    return;
-  }
-
-  const prodFiltrados = allProducts.filter((product) => {
-    const coincidenciaTitulo = product.title.toLowerCase().includes(busqueda);
-    const coincidenciaDesc = product.description.toLowerCase().includes(busqueda);
-
-    return coincidenciaTitulo || coincidenciaDesc;
+  // La API trae algunas categorias de prueba, por eso se muestran solo las que tienen productos.
+  const idsCategoriasConProductos = new Set(allProducts.map((product) => Number(product.categoryId)));
+  const categoriasVisibles = categories.filter((category) => {
+    const nombre = category?.name?.trim();
+    return nombre && nombre.toLowerCase() !== 'string' && idsCategoriasConProductos.has(Number(category.id));
   });
 
-  renderProducts(prodFiltrados);
+  if (!categoriasVisibles.length) {
+    categoryContainer.innerHTML = `
+      <button class="btn btn-outline-primary active flex-shrink-0 category-filter-btn" data-category-id="all">Todas</button>
+    `;
+    return;
+  }
+
+  const claseTodas = categoriaActivaId === null ? 'active' : '';
+
+  categoryContainer.innerHTML = `
+    <button class="btn btn-outline-primary ${claseTodas} flex-shrink-0 category-filter-btn" data-category-id="all">Todas</button>
+    ${categoriasVisibles.map((category) => {
+      const idCategoria = Number(category.id);
+      const claseActiva = categoriaActivaId === idCategoria ? 'active' : '';
+      const nombre = nombreCategoria(category);
+
+      return `
+        <button class="btn btn-outline-primary ${claseActiva} flex-shrink-0 category-filter-btn" data-category-id="${idCategoria}">
+          ${nombre}
+        </button>
+      `;
+    }).join('')}
+  `;
+}
+
+function aplicarFiltros() {
+  const busqueda = busqInput ? busqInput.value.trim().toLowerCase() : '';
+
+  // Filtro final: categoria seleccionada + texto escrito en el buscador.
+  const productosFiltrados = allProducts.filter((product) => {
+    const okCategoria = categoriaActivaId === null || Number(product.categoryId) === categoriaActivaId;
+
+    const okBusqueda = !busqueda
+      || product.title.toLowerCase().includes(busqueda)
+      || product.description.toLowerCase().includes(busqueda);
+
+    return okCategoria && okBusqueda;
+  });
+
+  renderProducts(productosFiltrados);
+}
+
+function filtrarProductos(terminosBusq = '') {
+  if (busqInput && busqInput.value !== terminosBusq) {
+    busqInput.value = terminosBusq;
+  }
+
+  aplicarFiltros();
+}
+
+if (categoryContainer) {
+  categoryContainer.addEventListener('click', (event) => {
+    const btnCategoria = event.target.closest('.category-filter-btn');
+    if (!btnCategoria) return;
+
+    const idSeleccionado = btnCategoria.dataset.categoryId;
+    categoriaActivaId = idSeleccionado === 'all' ? null : Number(idSeleccionado);
+
+    renderCategory(allCategories);
+    aplicarFiltros();
+  });
 }
 
 if (busqForm) {
@@ -102,7 +149,7 @@ if (busqForm) {
 
 if (busqInput) {
   busqInput.addEventListener('input', () => {
-    filtrarProductos(busqInput.value);
+    aplicarFiltros();
   });
 }
 
@@ -128,7 +175,8 @@ fetch(API_URL)
   .then((response) => response.json())
   .then((data) => {
     allProducts = data;
-    renderProducts(allProducts);
+    aplicarFiltros();
+    renderCategory(allCategories);
     console.log('Productos cargados:', data);
   })
   .catch(() => {
@@ -140,7 +188,7 @@ fetch(API_CATEGORIES)
   .then((data) => {
     allCategories = data;
     console.log('categorias cargados:', data);
-    renderCategory(allCategories)
+    renderCategory(allCategories);
   })
   .catch(() => {
     console.log('Error al cargar categorías');
