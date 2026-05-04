@@ -67,34 +67,30 @@ function renderProducts(products = []) {
   }).join('');
 }
 
+
 function renderCategory(categories = []) {
   if (!categoryContainer) return;
 
-  // La API trae algunas categorias de prueba, por eso se muestran solo las que tienen productos.
-  const idsCategoriasConProductos = new Set(allProducts.map((product) => Number(product.categoryId)));
   const categoriasVisibles = categories.filter((category) => {
     const nombre = category?.name?.trim();
-    return nombre && nombre.toLowerCase() !== 'string' && idsCategoriasConProductos.has(Number(category.id));
+    return nombre && nombre.toLowerCase() !== 'string';
   });
-
-  if (!categoriasVisibles.length) {
-    categoryContainer.innerHTML = `
-      <button class="btn btn-outline-primary active flex-shrink-0 category-filter-btn" data-category-id="all">Todas</button>
-    `;
-    return;
-  }
 
   const claseTodas = categoriaActivaId === null ? 'active' : '';
 
   categoryContainer.innerHTML = `
-    <button class="btn btn-outline-primary ${claseTodas} flex-shrink-0 category-filter-btn" data-category-id="all">Todas</button>
+    <button class="btn btn-outline-primary ${claseTodas} flex-shrink-0 category-filter-btn" data-category-id="all">
+      Todas
+    </button>
     ${categoriasVisibles.map((category) => {
       const idCategoria = Number(category.id);
       const claseActiva = categoriaActivaId === idCategoria ? 'active' : '';
       const nombre = nombreCategoria(category);
 
       return `
-        <button class="btn btn-outline-primary ${claseActiva} flex-shrink-0 category-filter-btn" data-category-id="${idCategoria}">
+        <button 
+          class="btn btn-outline-primary ${claseActiva} flex-shrink-0 category-filter-btn" 
+          data-category-id="${idCategoria}">
           ${nombre}
         </button>
       `;
@@ -127,15 +123,15 @@ function filtrarProductos(terminosBusq = '') {
   aplicarFiltros();
 }
 
+
 if (categoryContainer) {
   categoryContainer.addEventListener('click', (event) => {
-    const btnCategoria = event.target.closest('.category-filter-btn');
-    if (!btnCategoria) return;
+    const btn = event.target.closest('.category-filter-btn');
+    if (!btn) return;
 
-    const idSeleccionado = btnCategoria.dataset.categoryId;
-    categoriaActivaId = idSeleccionado === 'all' ? null : Number(idSeleccionado);
-
-    renderCategory(allCategories);
+    const id = btn.dataset.categoryId;
+    categoriaActivaId = id === 'all' ? null : Number(id);    
+    renderCategory(allCategories);    
     aplicarFiltros();
   });
 }
@@ -171,25 +167,18 @@ if (productsContainer) {
   });
 }
 
-fetch(API_URL)
+
+  fetch(API_URL)
   .then((response) => response.json())
   .then((data) => {
     allProducts = data;
     aplicarFiltros();
-    renderCategory(allCategories);
-    console.log('Productos cargados:', data);
-  })
-  .catch(() => {
-    renderProducts();
   });
 
-fetch(API_CATEGORIES)
+
+  fetch(API_CATEGORIES)
   .then((response) => response.json())
   .then((data) => {
     allCategories = data;
-    console.log('categorias cargados:', data);
     renderCategory(allCategories);
   })
-  .catch(() => {
-    console.log('Error al cargar categorías');
-  });
