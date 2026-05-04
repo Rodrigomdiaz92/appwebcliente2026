@@ -7,6 +7,17 @@ let allProducts = [];
 let allCategories = [];
 let categoriaActivaId = null;
 const API_CATEGORIES = "https://web-api-products.runasp.net/api/Categories";
+const loader = document.getElementById('loader');
+const mainContent = document.getElementById('main-content');
+
+let productosCargados = false;
+let categoriasCargadas = false;
+
+
+
+
+
+
 
 const nombresCategoria = {
   Electronics: 'Electrónica',
@@ -30,6 +41,7 @@ document.addEventListener("click", (e) => {
 
 function renderProducts(products = []) {
   if (!productsContainer) return;
+  productsContainer.innerHTML = ' ';
 
   if (!products.length) {
     productsContainer.innerHTML = `
@@ -98,11 +110,11 @@ function renderCategory(categories = []) {
   `;
 }
 
+
 function aplicarFiltros() {
   const busqueda = busqInput ? busqInput.value.trim().toLowerCase() : '';
 
-  // Filtro final: categoria seleccionada + texto escrito en el buscador.
-  const productosFiltrados = allProducts.filter((product) => {
+  let productosFiltrados = allProducts.filter((product) => {
     const okCategoria = categoriaActivaId === null || Number(product.categoryId) === categoriaActivaId;
 
     const okBusqueda = !busqueda
@@ -111,6 +123,11 @@ function aplicarFiltros() {
 
     return okCategoria && okBusqueda;
   });
+
+  
+  if (busqueda) {
+    productosFiltrados = productosFiltrados.slice(0, 2);
+  }
 
   renderProducts(productosFiltrados);
 }
@@ -143,10 +160,16 @@ if (busqForm) {
   });
 }
 
-if (busqInput) {
-  busqInput.addEventListener('input', () => {
+if (busqInput) {  
+  let timeoutBusqueda;
+
+busqInput.addEventListener('input', () => {
+  clearTimeout(timeoutBusqueda);
+
+  timeoutBusqueda = setTimeout(() => {
     aplicarFiltros();
-  });
+  }, 300);
+});
 }
 
 if (productsContainer) {
@@ -168,12 +191,20 @@ if (productsContainer) {
 }
 
 
-  fetch(API_URL)
+  
+fetch(API_URL)
   .then((response) => response.json())
   .then((data) => {
     allProducts = data;
     aplicarFiltros();
+  })
+  .catch(() => {
+    console.error("Error cargando productos");
+  })
+  .finally(() => {
+    console.log("Productos cargados correctamente");
   });
+
 
 
   fetch(API_CATEGORIES)
@@ -182,3 +213,6 @@ if (productsContainer) {
     allCategories = data;
     renderCategory(allCategories);
   })
+  .catch(() => {
+    console.error("Error cargando categorías");
+  });
