@@ -91,6 +91,8 @@ function finalizarCompra() {
     const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(elementoOffCanvas);
     offcanvas.hide();
   }
+
+  clearCart();
 }
 
 function renderCarrito() {
@@ -114,22 +116,28 @@ function renderCarrito() {
     <div class="d-flex flex-column gap-3">
       <div class="d-flex flex-column gap-3">
         ${carrito.map((product) => `
-          <div class="card border-0 shadow-sm">
-            <div class="card-body d-flex gap-3 align-items-center">
+          <div class="card border-0 shadow-sm cart-item-card">
+            <button
+              class="btn cart-remove-btn"
+              type="button"
+              aria-label="Eliminar producto del carrito"
+              onclick="window.cartUtils.removeProductFromCart(${product.id})"
+            >&times;</button>
+            <div class="card-body d-flex gap-3 align-items-center cart-item-body">
               <img
                 src="${product.image}"
                 alt="${product.title}"
-                class="rounded"
-                style="width: 60px; height: 60px; object-fit: cover;"
+                class="rounded cart-item-img"
               >
-              <div class="flex-grow-1">
-                <h6 class="mb-1 text-truncate" style="max-width: 150px;">${product.title}</h6>
+              <div class="flex-grow-1 cart-item-info">
+                <h6 class="mb-1 text-truncate cart-item-title">${product.title}</h6>
                 <p class="mb-1 fw-semibold">$USD ${(product.price * product.quantity).toFixed(2)}</p>
-                <div class="d-flex align-items-center gap-2">
-                  <button class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="window.cartUtils.decreaseProductQuantity(${product.id})">-</button>
-                  <span class="small">${product.quantity}</span>
-                  <button class="btn btn-sm btn-outline-secondary py-0 px-2" onclick="window.cartUtils.increaseProductQuantity(${product.id})">+</button>
-                  <button class="btn btn-sm btn-link text-danger p-0 ms-auto" onclick="window.cartUtils.removeProductFromCart(${product.id})" style="text-decoration: none; font-size: 0.8rem;">Eliminar</button>
+                <div class="d-flex align-items-center cart-quantity-row">
+                  <div class="d-flex align-items-center cart-quantity-controls">
+                    <button class="btn btn-sm btn-outline-secondary cart-quantity-btn" onclick="window.cartUtils.decreaseProductQuantity(${product.id})">-</button>
+                    <span class="small cart-quantity-value">${product.quantity}</span>
+                    <button class="btn btn-sm btn-outline-secondary cart-quantity-btn" onclick="window.cartUtils.increaseProductQuantity(${product.id})">+</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -142,9 +150,9 @@ function renderCarrito() {
           <span class="fw-bold fs-5">Total:</span>
           <span class="fw-bold fs-5">$USD ${total.toFixed(2)}</span>
         </div>
-        <div class="d-grid gap-2">
-          <button class="btn btn-success btn-lg" onclick="window.cartUtils.finalizarCompra()">Finalizar compra</button>
-          <button class="btn btn-outline-danger btn-sm" onclick="window.cartUtils.clearCart()">Vaciar carrito</button>
+        <div class="cart-actions">
+          <button class="btn btn-success btn-lg cart-checkout-btn" onclick="window.cartUtils.finalizarCompra()">Finalizar compra</button>
+          <button class="btn btn-outline-danger cart-clear-btn" onclick="window.cartUtils.clearCart()">Vaciar carrito</button>
         </div>
       </div>
     </div>
