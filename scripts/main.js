@@ -171,6 +171,10 @@ if (productsContainer) {
   });
 }
 
+if (productsContainer) {
+  Skeleton.renderProductCards(productsContainer);
+}
+
 fetch(API_URL)
   .then((response) => response.json())
   .then((data) => {
