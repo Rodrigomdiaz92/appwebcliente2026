@@ -1,106 +1,179 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/png" href="../img/ICONO.png">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <link rel="stylesheet" href="../css/style.css">
-  <title>Detalle del producto</title>
-</head>
-<body>
-  <header>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="../img/ICONO.png" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <title>Detalle del producto</title>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="../index.html">
+            <img
+              src="../img/LogoSinFondo.png"
+              alt="Ecommerce Grupo 8"
+              class="site-logo"
+            />
+          </a>
 
-        <a class="navbar-brand" href="../index.html">
-          <img src="../img/LogoSinFondo.png" alt="Ecommerce Grupo 8" class="site-logo">
-        </a>
+          <div class="d-flex align-items-center gap-2 order-lg-3 ms-auto">
+            <button
+              class="btn btn-primary"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasRight"
+            >
+              🛒
+            </button>
 
-        <div class="d-flex align-items-center gap-2 order-lg-3 ms-auto">
-          <button class="btn btn-primary"
-            type="button"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasRight">
-            🛒
-          </button>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarContent"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </div>
 
-          <button class="navbar-toggler" type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarContent">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        </div>
+          <div class="collapse navbar-collapse order-lg-2" id="navbarContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-lg-3">
+              <li class="nav-item">
+                <a class="nav-link active nav-home-link" href="../index.html"
+                  >Home</a
+                >
+              </li>
 
-        <div class="collapse navbar-collapse order-lg-2" id="navbarContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" href="../index.html">Home</a>
-            </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link" href="#">Productos</a>
-            </li> -->
-          </ul>
+              <li class="nav-item">
+                <a class="nav-link nav-home-link" href="../docs/faq.html"
+                  >FAQ</a
+                >
+              </li>
 
-          <!-- <form class="d-flex mt-3 mt-lg-0" role="search">
+              <li class="nav-item">
+                <a class="nav-link nav-home-link" href="../docs/contacto.html"
+                  >Contacto</a
+                >
+              </li>
+            </ul>
+
+            <!-- <form class="d-flex mt-3 mt-lg-0" role="search">
             <input class="form-control me-2" type="search" placeholder="Buscar producto">
             <button class="btn btn-outline-success" type="submit">Buscar</button>
           </form> -->
-        </div>
-      </div>
-    </nav>
-
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight">
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title">Carrito</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
-      </div>
-      <div class="offcanvas-body" id="cart-items">
-        Tu carrito está vacío 🛒
-      </div>
-    </div>
-
-    <!-- Modal Construcción -->
-    <div class="modal fade" id="modalConstruccion" tabindex="-1" aria-labelledby="modalConstruccionLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalConstruccionLabel">Aviso</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body text-center py-4">
-            <p class="fs-5">Funcionalidad en construcción, ¡Muy pronto podrás realizar tus compras!</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
           </div>
         </div>
-      </div>
-    </div>
-  </header>
+      </nav>
 
-  <main class="container my-5" id="product-container">
-    
-  </main>
-
-  <footer class="border-top py-4 mt-5 bg-white">
-    <div class="container text-center text-md-start">
-      <div class="row">
-        <div class="col-md-6 mb-3 mb-md-0">
-          <h5 class="mb-2">appWebCliente2026</h5>
-          <p class="text-muted mb-0">Trabajo práctico grupal de ecommerce.</p>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title">Carrito</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="offcanvas"
+          ></button>
         </div>
-        <div class="col-md-6 text-md-end">
-          <a href="../index.html" class="text-decoration-none me-3">Inicio</a>
-          <a href="#" class="text-decoration-none">Contacto</a>
+        <div class="offcanvas-body" id="cart-items">
+          Tu carrito está vacío 🛒
         </div>
       </div>
-    </div>
-  </footer>
 
-  <script src="../scripts/cart.js"></script>
-  <script src="../scripts/skeleton.js"></script>
-  <script src="../scripts/detalle.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-</body>
+      <!-- Modal Construcción -->
+      <div
+        class="modal fade"
+        id="modalConstruccion"
+        tabindex="-1"
+        aria-labelledby="modalConstruccionLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalConstruccionLabel">
+                Compra Completada 🥳
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body text-center py-4">
+              <p class="fs-5">Tu pedido esta Completado!</p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cerrar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="container my-5" id="product-container"></main>
+
+    <footer>
+    <div class="container"> 
+      <footer class="py-5"> 
+        <div class="row"> 
+          <div class="col-6 col-md-2 mb-3"> 
+            <h5>Secciones</h5> 
+            <ul class="nav flex-column">
+              <li class="nav-item mb-2">
+                <a href="../index.html" class="nav-link p-0 text-body-secondary">Home</a>
+              </li> 
+              <li class="nav-item mb-2">
+                <a href="../index.html" class="nav-link p-0 text-body-secondary">Productos</a>
+               
+              <li class="nav-item mb-2">
+                <a href="../docs/faq.html" class="nav-link p-0 text-body-secondary">FAQs</a>
+              </li> 
+              <li class="nav-item mb-2">
+                <a href="../docs/contacto.html" class="nav-link p-0 text-body-secondary">Contacto</a>
+              </li> 
+            </ul> 
+          </div> 
+          <div class="col-md-5 offset-md-1 mb-3"> 
+            <form> 
+              <h5>Subscribite a nuestro Newsletter</h5> 
+              <p>Mensualamente estaremos mandandote novedades acerca de nuestros productos.</p> 
+              <div class="d-flex flex-column flex-sm-row w-100 gap-2"> 
+                <label for="newsletter1" class="visually-hidden">Email</label> 
+                <input id="newsletter1" type="email" class="form-control" placeholder="Dejanos tu email..."> 
+                <button class="btn btn-primary" type="button">Subscribete</button> 
+              </div> 
+            </form> 
+          </div> 
+        </div> 
+      </div> 
+      <div class="container"> 
+        <footer class="py-3 my-4"> 
+          <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top"> <p>© 2025 Company, Inc. All rights reserved.</p> <ul class="list-unstyled d-flex"> <li class="ms-3"><a class="link-body-emphasis" href="#" aria-label="Instagram"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li> <li class="ms-3"><a class="link-body-emphasis" href="#" aria-label="Facebook"><svg class="bi" width="24" height="24" aria-hidden="true"><use xlink:href="#facebook"></use></svg></a></li> </ul> </div> </footer> </div>
+    </footer>
+
+    <script src="../scripts/cart.js"></script>
+    <script src="../scripts/skeleton.js"></script>
+    <script src="../scripts/detalle.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
